@@ -150,12 +150,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EzTriangle.cpp" />
+    <ClCompile Include="LoadShader.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EzTriangle.h" />
+    <ClInclude Include="LoadShader.h" />
     <ClInclude Include="OpenGLWindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FragmentShader.fs" />
+    <None Include="VertexShader.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
