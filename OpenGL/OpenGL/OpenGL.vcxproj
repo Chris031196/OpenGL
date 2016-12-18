@@ -149,12 +149,14 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="EzCube.cpp" />
     <ClCompile Include="EzTriangle.cpp" />
     <ClCompile Include="LoadShader.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EzCube.h" />
     <ClInclude Include="EzTriangle.h" />
     <ClInclude Include="LoadShader.h" />
     <ClInclude Include="OpenGLWindow.h" />
