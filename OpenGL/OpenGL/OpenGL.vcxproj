@@ -149,21 +149,26 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Controls.cpp" />
     <ClCompile Include="EzCube.cpp" />
     <ClCompile Include="EzTriangle.cpp" />
-    <ClCompile Include="LoadShader.cpp" />
+    <ClCompile Include="Loader.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGLWindow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="EzCube.h" />
     <ClInclude Include="EzTriangle.h" />
-    <ClInclude Include="LoadShader.h" />
+    <ClInclude Include="Controls.h" />
+    <ClInclude Include="Loader.h" />
     <ClInclude Include="OpenGLWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.fs" />
     <None Include="VertexShader.vs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="texture.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

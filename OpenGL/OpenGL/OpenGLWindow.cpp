@@ -42,55 +42,73 @@ int OpenGLWindow::Init(int width, int height, char * name)
 		return -1;
 	}
 
-	return 0;
+	return 0; 
 }
 
 void OpenGLWindow::Loop()
 {
 	glfwSetInputMode(m_wind, GLFW_STICKY_KEYS, GL_TRUE);
 
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glEnable(GL_DEPTH_TEST);
+	glDepthFunc(GL_LESS);
+	glEnable(GL_CULL_FACE);
+
 	//Init OpenGL
 	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-
-	GLuint programID = ShaderLoader::LoadShaders("VertexShader.vs", "FragmentShader.fs");
+	GLuint programID = Loader::LoadShaders("VertexShader.vs", "FragmentShader.fs");
 
 	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
 
-	glm::mat4 projection = glm::perspective(45.0f, 4.0f / 3.0f, 0.1f, 100.0f);
-	glm::mat4 view = glm::lookAt(glm::vec3(4, 3, -3), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
-	glm::mat4 model = glm::mat4(1.0f);
+	
 
-	glm::mat4 mvp = projection * view * model;
+	EzCube* cube = new EzCube();
+	GLuint texture = cube->Init();
 
-	EzCube* tri = new EzCube();
-	tri->Init();
-
+	GLuint TextureID = glGetUniformLocation(programID, "texSampler");
 
 	do {
 		//drawing
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram(programID);
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
-		tri->Draw();
+		Controls::ComputeMatrices(m_wind);
+		glm::mat4 projection = Controls::GetProjectionMatrix();
+		glm::mat4 view = Controls::GetViewMatrix();
+
+		for (int i = 0; i < 30; i++) {
+			for (int j = 0; j < 30; j++) {
+				glm::mat4 model = glm::translate(glm::vec3(-4.0f*i, 0, -4.0f*j));
+				glm::mat4 mvp = projection * view * model;
+				glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+
+				glActiveTexture(GL_TEXTURE0);
+				glBindTexture(GL_TEXTURE_2D, texture);
+				glUniform1i(TextureID, 0);
+
+				cube->Draw();
+			}
+		}
+
 
 		glfwSwapBuffers(m_wind);
 		glfwPollEvents();
 	} while (glfwGetKey(m_wind, GLFW_KEY_ESCAPE) != GLFW_PRESS && glfwWindowShouldClose(m_wind) == GL_FALSE);
 
+
 	// Cleanup VBO and shader
+	delete cube;
 	glDeleteProgram(programID);
+	glDeleteTextures(1, &TextureID);
 	glDeleteVertexArrays(1, &VertexArrayID);
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
 
-	delete tri;
 }
 
 

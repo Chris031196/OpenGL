@@ -1,6 +1,6 @@
-#include "LoadShader.h"
+#include "Loader.h"
 
-GLuint ShaderLoader::LoadShaders(const char * vertex_file_path, const char * fragment_file_path)
+GLuint Loader::LoadShaders(const char * vertex_file_path, const char * fragment_file_path)
 {
 	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
@@ -87,5 +87,44 @@ GLuint ShaderLoader::LoadShaders(const char * vertex_file_path, const char * fra
 	glDeleteShader(FragmentShaderID);
 
 	return ProgramID;
-	return GLuint();
+}
+
+unsigned char* Loader::LoadBMP(const char * imagepath, unsigned int** height, unsigned int** width)
+{
+	unsigned char header[54];
+	unsigned int dataPos;
+	unsigned int imageSize;
+	unsigned char* data;
+
+	FILE* file = fopen(imagepath, "rb");
+	if (!file) {
+		printf("Image couldn't be loaded!\n");
+		return 0;
+	}
+
+	if (fread(header, 1, 54, file) != 54) {
+		printf("File Corrupted!\n");
+		return 0;
+	}
+
+	if (header[0] != 'B' || header[1] != 'M') {
+		printf("File Corrupted!\n");
+		return 0;
+	}
+
+	dataPos = *(int*)&(header[0x0A]);
+	imageSize = *(int*)&(header[0x22]);
+	*width = (unsigned int*)&(header[0x12]);
+	*height = (unsigned int*)&(header[0x16]);
+
+	if (imageSize == 0) imageSize = (**width)*(**height) * 3;
+	if (dataPos == 0) dataPos = 54;
+
+	data = new unsigned char[imageSize];
+
+	fread(data, 1, imageSize, file);
+
+	fclose(file);
+
+	return data;
 }

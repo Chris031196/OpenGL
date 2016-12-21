@@ -30,10 +30,13 @@
     <ClCompile Include="EzTriangle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="LoadShader.cpp">
+    <ClCompile Include="EzCube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EzCube.cpp">
+    <ClCompile Include="Loader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Controls.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,10 +47,13 @@
     <ClInclude Include="EzTriangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="LoadShader.h">
+    <ClInclude Include="EzCube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EzCube.h">
+    <ClInclude Include="Loader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Controls.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -58,5 +64,10 @@
     <None Include="FragmentShader.fs">
       <Filter>Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="texture.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

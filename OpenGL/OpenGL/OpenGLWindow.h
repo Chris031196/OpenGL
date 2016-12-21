@@ -9,7 +9,8 @@
 #include <glm\gtc\matrix_transform.hpp>
 #include "EzTriangle.h"
 #include "EzCube.h"
-#include "LoadShader.h"
+#include "Loader.h"
+#include "Controls.h"
 
 
 class OpenGLWindow

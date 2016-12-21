@@ -2,6 +2,8 @@
 
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
+#include <stdlib.h>
+#include "Loader.h"
 
 class EzCube
 {
@@ -9,11 +11,12 @@ public:
 	EzCube();
 	~EzCube();
 
-	void Init();
+	GLuint Init();
 	void Draw();
+	void ChangeColor();
 
 private:
 	GLuint vertexBuffer;
-	GLuint colorBuffer;
+	GLuint uvBuffer;
 };
 
