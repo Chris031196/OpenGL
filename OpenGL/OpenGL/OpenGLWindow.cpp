@@ -19,8 +19,8 @@ int OpenGLWindow::Init(int width, int height, char * name)
 
 	//Give GLFW some Info
 	glfwWindowHint(GLFW_SAMPLES, 4); //Antialiasing 4x
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // Version 3.3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4); // Version 3.3
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //Some Mac Stuff
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Not the old OpenGL
 
@@ -49,7 +49,7 @@ void OpenGLWindow::Loop()
 {
 	glfwSetInputMode(m_wind, GLFW_STICKY_KEYS, GL_TRUE);
 
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
@@ -61,14 +61,18 @@ void OpenGLWindow::Loop()
 
 	GLuint programID = Loader::LoadShaders("VertexShader.vs", "FragmentShader.fs");
 
-	GLuint MatrixID = glGetUniformLocation(programID, "MVP");
+	GLuint id_MVP = glGetUniformLocation(programID, "MVP");
+	GLuint id_M = glGetUniformLocation(programID, "M");
+	GLuint id_V = glGetUniformLocation(programID, "V");
+	GLuint id_lightPosition_Worldspace = glGetUniformLocation(programID, "lightPosition_Worldspace");
 
-	
+	glm::vec3 light = glm::vec3(10, 0, 0);
+	float grad = 0.0f;
 
-	EzCube* cube = new EzCube();
-	GLuint texture = cube->Init();
+	EzCube cube = EzCube();
+	GLuint texture = cube.Init();
 
-	GLuint TextureID = glGetUniformLocation(programID, "texSampler");
+	GLuint id_texSampler = glGetUniformLocation(programID, "texSampler");
 
 	do {
 		//drawing
@@ -80,19 +84,28 @@ void OpenGLWindow::Loop()
 		glm::mat4 projection = Controls::GetProjectionMatrix();
 		glm::mat4 view = Controls::GetViewMatrix();
 
-		for (int i = 0; i < 30; i++) {
-			for (int j = 0; j < 30; j++) {
-				glm::mat4 model = glm::translate(glm::vec3(-4.0f*i, 0, -4.0f*j));
-				glm::mat4 mvp = projection * view * model;
-				glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
+		glm::mat4 model = glm::mat4();
+		glm::mat4 mvp = projection * view * model;
 
-				glActiveTexture(GL_TEXTURE0);
-				glBindTexture(GL_TEXTURE_2D, texture);
-				glUniform1i(TextureID, 0);
-
-				cube->Draw();
-			}
+		if (grad < 360) {
+			grad += 0.01f;
 		}
+		else {
+			grad = 0.0f;
+		}
+		light.x = glm::cos(grad)*10;
+		light.z = glm::sin(grad)*10;
+
+		glUniformMatrix4fv(id_MVP, 1, GL_FALSE, &mvp[0][0]);
+		glUniformMatrix4fv(id_M, 1, GL_FALSE, &model[0][0]);
+		glUniformMatrix4fv(id_V, 1, GL_FALSE, &view[0][0]);
+		glUniform3fv(id_lightPosition_Worldspace, 1, &light[0]);
+
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, texture);
+		glUniform1i(id_texSampler, 0);
+
+		cube.Draw();
 
 
 		glfwSwapBuffers(m_wind);
@@ -101,9 +114,8 @@ void OpenGLWindow::Loop()
 
 
 	// Cleanup VBO and shader
-	delete cube;
 	glDeleteProgram(programID);
-	glDeleteTextures(1, &TextureID);
+	glDeleteTextures(1, &id_texSampler);
 	glDeleteVertexArrays(1, &VertexArrayID);
 
 	// Close OpenGL window and terminate GLFW

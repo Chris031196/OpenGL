@@ -3,7 +3,7 @@
 glm::mat4 proMat;
 glm::mat4 viewMat;
 
-glm::vec3 position = glm::vec3(-15*4, 0, -15*4);
+glm::vec3 position = glm::vec3(0, 0, 0);
 float horizontalAngle = glm::radians(90.0f);
 float verticalAngle = 0.0f;
 float initialFov = glm::radians(75.0f);
@@ -23,7 +23,7 @@ void Controls::ComputeMatrices(GLFWwindow* window)
 
 	horizontalAngle += mouseSpeed * deltaTime * float(1920.0 / 2.0 - mX);
 	verticalAngle += mouseSpeed * deltaTime * float(1080.0 / 2.0 - mY);
-	printf("Vert: %f\n", verticalAngle);
+
 	if (verticalAngle <= glm::radians(-90.0f)) {
 		verticalAngle = glm::radians(-90.0f);
 	}

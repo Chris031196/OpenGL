@@ -69,5 +69,8 @@
     <Image Include="texture.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="tex.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

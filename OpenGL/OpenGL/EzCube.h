@@ -18,5 +18,7 @@ public:
 private:
 	GLuint vertexBuffer;
 	GLuint uvBuffer;
+	GLuint normalBuffer;
+	int vNum;
 };
 

@@ -1,6 +1,3 @@
-﻿  Controls.cpp
-c:\users\chris\source\repos\opengl\opengl\opengl\controls.cpp(13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\chris\source\repos\opengl\opengl\opengl\controls.cpp(17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\chris\source\repos\opengl\opengl\opengl\controls.cpp(18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+﻿  OpenGLWindow.cpp
   OpenGL.vcxproj -> C:\Users\Chris\Source\Repos\OpenGL\OpenGL\x64\Debug\OpenGL.exe
   OpenGL.vcxproj -> C:\Users\Chris\Source\Repos\OpenGL\OpenGL\x64\Debug\OpenGL.pdb (Full PDB)
