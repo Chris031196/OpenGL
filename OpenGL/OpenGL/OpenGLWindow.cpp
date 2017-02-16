@@ -24,7 +24,7 @@ int OpenGLWindow::Init(int width, int height, char * name)
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //Some Mac Stuff
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Not the old OpenGL
 
-	m_wind = glfwCreateWindow(width, height, name, NULL, NULL);
+	m_wind = glfwCreateWindow(width, height, name, glfwGetPrimaryMonitor(), NULL);
 	if (m_wind == NULL) {
 		fprintf(stderr, "Failed to Init Window!");
 		getchar();
@@ -48,6 +48,7 @@ int OpenGLWindow::Init(int width, int height, char * name)
 void OpenGLWindow::Loop()
 {
 	glfwSetInputMode(m_wind, GLFW_STICKY_KEYS, GL_TRUE);
+	glfwSetInputMode(m_wind, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
@@ -74,8 +75,20 @@ void OpenGLWindow::Loop()
 
 	GLuint id_texSampler = glGetUniformLocation(programID, "texSampler");
 
+	double lastTime = glfwGetTime();
+	int nbFrames = 0;
 	do {
 		//drawing
+		double currentTime = glfwGetTime();
+		nbFrames++;
+		if (currentTime - lastTime >= 1.0) { // If last prinf() was more than 1 sec ago
+											 // printf and reset timer
+			printf("\n%f ms/frame", 1000.0 / double(nbFrames));
+			nbFrames = 0;
+			lastTime += 1.0;
+		}
+
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram(programID);
@@ -121,6 +134,7 @@ void OpenGLWindow::Loop()
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
 
+	getchar();
 }
 
 

@@ -19,10 +19,10 @@ void Controls::ComputeMatrices(GLFWwindow* window)
 
 	double mX, mY;
 	glfwGetCursorPos(window, &mX, &mY);
-	glfwSetCursorPos(window, 1920.0/2.0, 1080.0/2.0);
+	glfwSetCursorPos(window, WindowData::width/2.0, WindowData::height/2.0);
 
-	horizontalAngle += mouseSpeed * deltaTime * float(1920.0 / 2.0 - mX);
-	verticalAngle += mouseSpeed * deltaTime * float(1080.0 / 2.0 - mY);
+	horizontalAngle += mouseSpeed * deltaTime * float(WindowData::width / 2.0 - mX);
+	verticalAngle += mouseSpeed * deltaTime * float(WindowData::height / 2.0 - mY);
 
 	if (verticalAngle <= glm::radians(-90.0f)) {
 		verticalAngle = glm::radians(-90.0f);

@@ -4,6 +4,7 @@
 #include <glm\gtx\transform.hpp>
 #include <glm\gtc\matrix_transform.hpp>
 #include <stdio.h>
+#include "WindowData.h"
 
 namespace Controls {
 	

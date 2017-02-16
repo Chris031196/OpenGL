@@ -162,6 +162,7 @@
     <ClInclude Include="Controls.h" />
     <ClInclude Include="Loader.h" />
     <ClInclude Include="OpenGLWindow.h" />
+    <ClInclude Include="WindowData.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.fs" />

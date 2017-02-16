@@ -1,9 +1,10 @@
 #include "OpenGLWindow.h"
+#include "WindowData.h"
 
 int main()
 {
 	OpenGLWindow window = OpenGLWindow();
-	if (window.Init(1920, 1080, "OpenGL Window") == 0) {
+	if (window.Init(WindowData::width, WindowData::height, "OpenGL Window") == 0) {
 		window.Loop();
 	}
 
