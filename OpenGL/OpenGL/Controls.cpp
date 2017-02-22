@@ -72,7 +72,7 @@ void Controls::ComputeMatrices(GLFWwindow* window)
 		position -= glm::vec3(0, 1, 0) * deltaTime * speed;
 	}
 
-	proMat = glm::perspective(initialFov, 16.0f / 9.0f, 0.1f, 100.0f);
+	proMat = glm::perspective(initialFov, 16.0f / 9.0f, 0.1f, 1000.0f);
 	viewMat = glm::lookAt(position, position + direction, up);
 
 }

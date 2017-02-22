@@ -1,12 +1,4 @@
-﻿  Controls.cpp
-c:\users\chris\source\repos\opengl\opengl\opengl\controls.cpp(13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\chris\source\repos\opengl\opengl\opengl\controls.cpp(17): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
-c:\users\chris\source\repos\opengl\opengl\opengl\controls.cpp(18): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  Generating Code...
-  Compiling...
-  OpenGLWindow.cpp
-  OpenGL.cpp
-c:\users\chris\source\repos\opengl\opengl\opengl\opengl.cpp(7): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-  Generating Code...
+﻿  Planet.cpp
+c:\users\chris\source\repos\opengl\opengl\opengl\planet.cpp(106): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
   OpenGL.vcxproj -> C:\Users\Chris\Source\Repos\OpenGL\OpenGL\x64\Debug\OpenGL.exe
   OpenGL.vcxproj -> C:\Users\Chris\Source\Repos\OpenGL\OpenGL\x64\Debug\OpenGL.pdb (Full PDB)

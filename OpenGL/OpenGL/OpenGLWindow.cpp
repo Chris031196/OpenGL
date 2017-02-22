@@ -24,7 +24,7 @@ int OpenGLWindow::Init(int width, int height, char * name)
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //Some Mac Stuff
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Not the old OpenGL
 
-	m_wind = glfwCreateWindow(width, height, name, glfwGetPrimaryMonitor(), NULL);
+	m_wind = glfwCreateWindow(width, height, name, NULL, NULL);
 	if (m_wind == NULL) {
 		fprintf(stderr, "Failed to Init Window!");
 		getchar();
@@ -50,10 +50,11 @@ void OpenGLWindow::Loop()
 	glfwSetInputMode(m_wind, GLFW_STICKY_KEYS, GL_TRUE);
 	glfwSetInputMode(m_wind, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-	glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glEnable(GL_DEPTH_TEST);
 	glDepthFunc(GL_LESS);
 	glEnable(GL_CULL_FACE);
+	glfwSwapInterval(1);
 
 	//Init OpenGL
 	GLuint VertexArrayID;
@@ -65,15 +66,24 @@ void OpenGLWindow::Loop()
 	GLuint id_MVP = glGetUniformLocation(programID, "MVP");
 	GLuint id_M = glGetUniformLocation(programID, "M");
 	GLuint id_V = glGetUniformLocation(programID, "V");
+	GLuint id_P = glGetUniformLocation(programID, "P");
 	GLuint id_lightPosition_Worldspace = glGetUniformLocation(programID, "lightPosition_Worldspace");
+	GLuint id_texSampler = glGetUniformLocation(programID, "texSampler");
+	GLuint id_drawTail = glGetUniformLocation(programID, "in_drawTail");
 
-	glm::vec3 light = glm::vec3(10, 0, 0);
+	glm::vec3 light = glm::vec3(0, 0, 0);
 	float grad = 0.0f;
 
-	EzCube cube = EzCube();
-	GLuint texture = cube.Init();
+	MeshHolder* mesh = new MeshHolder();
+	mesh->initMesh("planet.obj", "texture.bmp");
 
-	GLuint id_texSampler = glGetUniformLocation(programID, "texSampler");
+	std::vector<Planet*> planets;
+
+	Planet* p = new Planet(mesh, 2.0f, glm::vec3(-50.0f, -50.0f, 0.0f)); //, glm::vec3(0.0f, 0.0f, 0.5f)
+	Planet* sun = new Planet(mesh, 5.0f, glm::vec3(50.0f, -50.0f, 0.0f));
+
+	planets.push_back(p);
+	planets.push_back(sun);
 
 	double lastTime = glfwGetTime();
 	int nbFrames = 0;
@@ -94,32 +104,32 @@ void OpenGLWindow::Loop()
 		glUseProgram(programID);
 
 		Controls::ComputeMatrices(m_wind);
-		glm::mat4 projection = Controls::GetProjectionMatrix();
+
 		glm::mat4 view = Controls::GetViewMatrix();
-
-		glm::mat4 model = glm::mat4();
-		glm::mat4 mvp = projection * view * model;
-
-		if (grad < 360) {
-			grad += 0.01f;
-		}
-		else {
-			grad = 0.0f;
-		}
-		light.x = glm::cos(grad)*10;
-		light.z = glm::sin(grad)*10;
-
-		glUniformMatrix4fv(id_MVP, 1, GL_FALSE, &mvp[0][0]);
-		glUniformMatrix4fv(id_M, 1, GL_FALSE, &model[0][0]);
 		glUniformMatrix4fv(id_V, 1, GL_FALSE, &view[0][0]);
+		glm::mat4 projection = Controls::GetProjectionMatrix();
+		glUniformMatrix4fv(id_P, 1, GL_FALSE, &projection[0][0]);
+
 		glUniform3fv(id_lightPosition_Worldspace, 1, &light[0]);
 
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, texture);
-		glUniform1i(id_texSampler, 0);
+		for (int i = 0; i < planets.size(); i++) {
+			planets[i]->calculate(planets);
+		}
 
-		cube.Draw();
+		for (int i = 0; i < planets.size(); i++) {
+			planets[i]->update();
 
+			glm::mat4 model = planets[i]->getModelMatrix();
+			glm::mat4 mvp = projection * view * model;
+			glUniformMatrix4fv(id_M, 1, GL_FALSE, &model[0][0]);
+			glUniformMatrix4fv(id_MVP, 1, GL_FALSE, &mvp[0][0]);
+
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, mesh->getTexID());
+			glUniform1i(id_texSampler, 0);
+
+			planets[i]->Draw(id_drawTail);
+		}
 
 		glfwSwapBuffers(m_wind);
 		glfwPollEvents();
@@ -130,6 +140,11 @@ void OpenGLWindow::Loop()
 	glDeleteProgram(programID);
 	glDeleteTextures(1, &id_texSampler);
 	glDeleteVertexArrays(1, &VertexArrayID);
+
+	for (int i = 0; i < planets.size(); i++) {
+		delete planets[i];
+	}
+	delete mesh;
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();

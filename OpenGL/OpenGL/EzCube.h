@@ -19,6 +19,11 @@ private:
 	GLuint vertexBuffer;
 	GLuint uvBuffer;
 	GLuint normalBuffer;
+	GLuint indexBuffer;
+
+	std::vector<glm::vec4> indexed_vertices;
+	std::vector<glm::vec3> indexed_normals;
+	std::vector<glm::vec2> indexed_uvs;
 	int vNum;
 };
 

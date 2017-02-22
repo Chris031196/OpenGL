@@ -11,6 +11,7 @@
 #include "EzCube.h"
 #include "Loader.h"
 #include "Controls.h"
+#include "Planet.h"
 
 
 class OpenGLWindow
