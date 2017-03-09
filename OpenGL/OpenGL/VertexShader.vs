@@ -28,7 +28,7 @@ void main(){
 		lightDirection_Cameraspace = lightPosition_Cameraspace + EyeDirection_Cameraspace;
 
 		normal_Cameraspace = (V * M * vec4(normal_Modelspace, 0)).xyz;
-		distanceToLight = distance(gl_Position, V * vec4(lightPosition_Worldspace, 1));
+		distanceToLight = distance(gl_Position, vec4(lightPosition_Worldspace, 1));
 
 		UV = vertexUV;
 	}

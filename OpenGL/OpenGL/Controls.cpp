@@ -7,7 +7,7 @@ glm::vec3 position = glm::vec3(0, 0, 0);
 float horizontalAngle = glm::radians(90.0f);
 float verticalAngle = 0.0f;
 float initialFov = glm::radians(75.0f);
-float speedN = 3.0f;
+float speedN = 6.0f;
 float mouseSpeed = 0.05f;
 
 float lastTime = glfwGetTime();

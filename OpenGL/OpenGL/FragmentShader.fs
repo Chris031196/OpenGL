@@ -17,8 +17,8 @@ void main(){
 		color.rgb = texture(texSampler, UV).rgb * cosTheta;
 	}
 	else {
-		color.r = 1.0f;
-		color.g = 1.0f;
+		color.r = 0.0f;
+		color.g = 0.0f;
 		color.b = 1.0f;
 		color.a = 1.0f;
 	}
