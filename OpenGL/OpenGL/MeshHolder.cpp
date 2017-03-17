@@ -17,15 +17,15 @@ MeshHolder::~MeshHolder()
 
 bool MeshHolder::initMesh(char* mesh_path, char* texture_path) {
 	//Init Texture
-	int* tex_width, *tex_height;
+	int tex_width, tex_height;
 	unsigned char* texData = Loader::LoadBMP(texture_path, &tex_width, &tex_height);
-	if (*tex_width == 0 || *tex_height == 0) {
+	if (tex_width == 0 || tex_height == 0) {
 		return false;
 	}
 
 	glGenTextures(1, &texID);
 	glBindTexture(GL_TEXTURE_2D, texID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, *tex_width, *tex_height, 0, GL_BGR, GL_UNSIGNED_BYTE, texData);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, tex_height, tex_width, 0, GL_BGR, GL_UNSIGNED_BYTE, texData);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

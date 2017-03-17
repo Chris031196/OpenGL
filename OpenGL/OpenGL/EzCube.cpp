@@ -9,7 +9,6 @@ EzCube::EzCube()
 
 EzCube::~EzCube()
 {
-	printf("Destruktor gecalled!\n");
 	glDeleteBuffers(1, &vertexBuffer);
 	glDeleteBuffers(1, &uvBuffer);
 	glDeleteBuffers(1, &normalBuffer);
@@ -19,7 +18,7 @@ EzCube::~EzCube()
 GLuint EzCube::Init()
 {
 	int* width, *height;
-	unsigned char* texData = Loader::LoadBMP("texture.bmp", &width, &height);
+	unsigned char* texData = Loader::LoadBMP("texture.bmp", width, height);
 
 	//Init Texture
 	GLuint Texture;

@@ -45,10 +45,10 @@ GLuint Loader::LoadShaders(const char * vertex_file_path, const char * fragment_
 
 	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &result);
 	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
-	if (InfoLogLength > 0) {
+	if (result != GL_TRUE) {
 		std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
 		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
-		printf("%s\n", VertexShaderErrorMessage[0]);
+		printf("%i\n", result);
 	}
 
 
@@ -89,7 +89,7 @@ GLuint Loader::LoadShaders(const char * vertex_file_path, const char * fragment_
 	return ProgramID;
 }
 
-unsigned char* Loader::LoadBMP(const char * imagepath, int** height, int** width)
+unsigned char* Loader::LoadBMP(const char * imagepath, int* height, int* width)
 {
 	unsigned char header[54];
 	unsigned int dataPos;
@@ -114,10 +114,14 @@ unsigned char* Loader::LoadBMP(const char * imagepath, int** height, int** width
 
 	dataPos = *(int*)&(header[0x0A]);
 	imageSize = *(int*)&(header[0x22]);
-	*width = (int*)&(header[0x12]);
-	*height = (int*)&(header[0x16]);
+	int *wP = (int*) &header[0x12];
+	int *hP = (int*) &header[0x16];
+	int *w = &(*wP);
+	int *h = &(*hP);
+	*width = *w;
+	*height = *h;
 
-	if (imageSize == 0) imageSize = (**width)*(**height) * 3;
+	if (imageSize == 0) imageSize = (*width)*(*height) * 3;
 	if (dataPos == 0) dataPos = 54;
 
 	data = new unsigned char[imageSize];
@@ -139,7 +143,7 @@ bool Loader::loadOBJ(
 
 	Assimp::Importer importer;
 
-	const aiScene* scene = importer.ReadFile(path, 0/*aiProcess_JoinIdenticalVertices | aiProcess_SortByPType*/);
+	const aiScene* scene = importer.ReadFile(path, aiProcess_SortByPType);
 	if (!scene) {
 		fprintf(stderr, importer.GetErrorString());
 		getchar();

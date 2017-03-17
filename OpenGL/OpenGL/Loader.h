@@ -14,7 +14,7 @@
 
 namespace Loader {
 	GLuint LoadShaders(const char* vertex_file_path, const char* fragment_file_path);
-	unsigned char* LoadBMP(const char* imagepath, int **height, int **width);
+	unsigned char* LoadBMP(const char* imagepath, int *height, int *width);
 	bool loadOBJ(
 		const char * path,
 		std::vector<unsigned short> & indices,

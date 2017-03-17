@@ -25,7 +25,6 @@ Planet::Planet(MeshHolder* mesh, float mass, glm::vec3 pos, glm::vec3 move)
 
 Planet::~Planet()
 {
-	printf("jep");
 	glDeleteBuffers(1, &tailBuffer);
 }
 

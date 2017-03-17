@@ -20,7 +20,7 @@ int OpenGLWindow::Init(int width, int height, char * name)
 	//Give GLFW some Info
 	glfwWindowHint(GLFW_SAMPLES, 4); //Antialiasing 4x
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 4); // Version 3.3
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3); // Version 3.3
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); //Some Mac Stuff
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Not the old OpenGL
 

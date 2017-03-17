@@ -1,13 +1,6 @@
-﻿  Planet.cpp
-c:\users\chris\source\repos\opengl\opengl\opengl\planet.cpp(127): warning C4267: 'argument': conversion from 'size_t' to 'GLsizei', possible loss of data
-  Generating Code...
-  Compiling...
-  OpenGLWindow.cpp
-c:\users\chris\source\repos\opengl\opengl\opengl\openglwindow.cpp(88): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\chris\source\repos\opengl\opengl\opengl\openglwindow.cpp(89): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\chris\source\repos\opengl\opengl\opengl\openglwindow.cpp(91): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-  OpenGL.cpp
-c:\users\chris\source\repos\opengl\opengl\opengl\opengl.cpp(7): warning C4244: 'argument': conversion from 'const float' to 'int', possible loss of data
-  Generating Code...
-  OpenGL.vcxproj -> C:\Users\Chris\Source\Repos\OpenGL\OpenGL\x64\Debug\OpenGL.exe
-  OpenGL.vcxproj -> C:\Users\Chris\Source\Repos\OpenGL\OpenGL\x64\Debug\OpenGL.pdb (Full PDB)
+﻿  Loader.cpp
+c:\users\chris\source\repos\opengl\opengl\opengl\loader.cpp(99): warning C4996: 'fopen': This function or variable may be unsafe. Consider using fopen_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(205): note: see declaration of 'fopen'
+c:\users\chris\source\repos\opengl\opengl\opengl\loader.cpp(155): warning C4018: '<': signed/unsigned mismatch
+c:\users\chris\source\repos\opengl\opengl\opengl\loader.cpp(193): warning C4715: 'Loader::loadOBJ': not all control paths return a value
+  OpenGL.vcxproj -> C:\Users\chris\Source\Repos\OpenGL\OpenGL\x64\Debug\OpenGL.exe
